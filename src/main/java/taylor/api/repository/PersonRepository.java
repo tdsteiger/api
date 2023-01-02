@@ -41,6 +41,10 @@ public class PersonRepository {
 		this.repository.remove(id);
 		return per;
 	}
+
+	public void removeAll() {
+		this.repository.clear();
+	}
 	
 	public List<Person> getAll() {
 		List<Person> pers = new ArrayList<>();
