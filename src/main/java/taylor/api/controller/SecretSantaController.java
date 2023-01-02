@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import taylor.api.model.Person;
@@ -28,10 +28,15 @@ public class SecretSantaController {
         return (new SecretSanta(pers)).getMapping();
 	}
 
-    // TODO: switch to request body instead of params
+	@DeleteMapping("/secret-santa")
+	public boolean removeAllPersons() {
+		repository.removeAll();
+		return true;
+	}
+
     @PostMapping("/secret-santa/add")
-	public Person addPerson(@RequestParam(value = "name") String name, @RequestParam(value = "email") String email) {
-        Person per = new Person(counter.incrementAndGet(), name, email);
+	public Person addPerson(@RequestBody Person per) {
+        per.setId(counter.incrementAndGet()); // Use our own ID
 
 		repository.add(per);
 		return per;
