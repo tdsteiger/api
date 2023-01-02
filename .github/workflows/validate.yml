@@ -1,0 +1,17 @@
+name: Validate
+on: [pull_request]
+jobs:
+  Validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          ./gradlew build
+      - name: Check
+        run: |
+          ./gradlew check
+      - name: Test
+        run: |
+          ./gradlew test
